@@ -5,7 +5,7 @@
 # Invenio Services is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
-version: '2.3'
+version: "2.3"
 services:
   redis:
     image: redis
@@ -17,31 +17,39 @@ services:
     image: mysql
     restart: "always"
     environment:
-      - "MYSQL_ROOT_PASSWORD=invenio"
-      - "MYSQL_DATABASE=invenio"
-      - "MYSQL_USER=invenio"
-      - "MYSQL_PASSWORD=invenio"
+      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
+      - "MYSQL_DATABASE=${MYSQL_DB}"
+      - "MYSQL_USER=${MYSQL_USER}"
+      - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
     ports:
       - "3306:3306"
   psql:
-    image: postgres:9.6
+    image: postgres:${PSQL_VERSION}
     restart: "always"
     environment:
-      - "POSTGRES_USER=invenio"
-      - "POSTGRES_PASSWORD=invenio"
-      - "POSTGRES_DB=invenio"
+      - "POSTGRES_USER=${PSQL_USER}"
+      - "POSTGRES_PASSWORD=${PSQL_PASSWORD}"
+      - "POSTGRES_DB=${PSQL_DB}"
     ports:
       - "5432:5432"
   es:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:${ESV}
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:${ES_VERSION}
     restart: "always"
     environment:
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - node.data=true
-      - network.host=0.0.0.0
-      - discovery.seed_hosts=[]
-      - cluster.initial_master_nodes=[]
+      - discovery.type=single-node
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "-f",
+          "localhost:9200/_cluster/health?wait_for_status=green",
+        ]
+      interval: 30s
+      timeout: 30s
+      retries: 5
     ulimits:
       memlock:
         soft: -1
