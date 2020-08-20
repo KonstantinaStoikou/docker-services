@@ -16,8 +16,12 @@ def services_down():
     It does not requries the services. It stops containers and removes
     containers, networks, volumes, and images created by `up`.
     """
-    command = ['docker-compose', '--file',
-        'docker_services/docker-services.yml', 'down'
+
+    command = [
+        "docker-compose",
+        "--file",
+        "../docker-services/docker_services/docker-services.yml",
+        "down",
     ]
 
     subprocess.run(command, check=True)
@@ -30,8 +34,13 @@ def services_up(services):
     there is no need to, so --build is not a slow default. In addition
     `--detach` is not supported in 1.17.0 or previous.
     """
-    command = ['docker-compose', '--file',
-        'docker_services/docker-services.yml', 'up', '-d'
+
+    command = [
+        "docker-compose",
+        "--file",
+        "../docker-services/docker_services/docker-services.yml",
+        "up",
+        "-d",
     ]
 
     command.extend(services)

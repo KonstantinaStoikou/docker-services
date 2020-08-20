@@ -3,6 +3,8 @@ setup.cfg
 setup.py
 docker_services/__init__.py
 docker_services/cli.py
+docker_services/env.py
+docker_services/services.py
 docker_services/version.py
 docker_services.egg-info/PKG-INFO
 docker_services.egg-info/SOURCES.txt
