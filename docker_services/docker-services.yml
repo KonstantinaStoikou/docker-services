@@ -5,7 +5,7 @@
 # Docker Services is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
-version: '2.3'
+version: "2.3"
 services:
   redis:
     image: redis
@@ -24,7 +24,7 @@ services:
     ports:
       - "3306:3306"
   psql:
-    image: postgres:9.6
+    image: postgres:${PSQL_VERSION}
     restart: "always"
     environment:
       - "POSTGRES_USER=${PSQL_USER}"
@@ -33,14 +33,28 @@ services:
     ports:
       - "5432:5432"
   es:
+<<<<<<< HEAD:docker_services/docker-services.yml
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.2.0
+=======
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:${ES_VERSION}
+>>>>>>> 944d596... env: add python script to export env and run docker-compose:docker-services.yml
     restart: "always"
     environment:
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - discovery.type=single-node
     healthcheck:
+<<<<<<< HEAD:docker_services/docker-services.yml
       test: ["CMD", "curl", "-f", "localhost:9200/_cluster/health?wait_for_status=green"]
+=======
+      test:
+        [
+          "CMD",
+          "curl",
+          "-f",
+          "localhost:9200/_cluster/health?wait_for_status=green",
+        ]
+>>>>>>> 944d596... env: add python script to export env and run docker-compose:docker-services.yml
       interval: 30s
       timeout: 30s
       retries: 5
