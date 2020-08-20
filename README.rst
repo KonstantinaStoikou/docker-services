@@ -5,7 +5,7 @@
     it under the terms of the MIT License; see LICENSE file for more details.
 
 ==================
-# Docker-Services
+Docker-Services
 ==================
 
 Python module to start external services needed to tests Invenio modules and applications.

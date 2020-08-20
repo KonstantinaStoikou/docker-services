@@ -45,7 +45,6 @@ def cli():
 def services(action, services, filepath):
     """Boots up or down the required services."""
     services = list(services)  # tuple to list
-    # FIXME: be able to override env vars from command line before running docker-compose
     export_env_vars()
     filepath = filepath if filepath else _services_filepath()
     if action == "up":
