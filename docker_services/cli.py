@@ -11,20 +11,34 @@ import click
 
 from .services import services_down, services_up
 
+from env import export_env_vars
+
+
 @click.group()
 @click.version_option()
 def cli():
     """Initialize CLI context."""
 
+
 @cli.command()
-@click.argument('action', default='up', required=False,
-                type=click.Choice(['up', 'down'], case_sensitive=False))
-@click.argument('services', nargs=-1, required=True)  # -1 incompat with default
+@click.argument(
+    "action",
+    default="up",
+    required=False,
+    type=click.Choice(["up", "down"], case_sensitive=False),
+)
+@click.argument(
+    "services", nargs=-1, required=True
+)  # -1 incompat with default
 def services(action, services):
     """Boots up or down the required services."""
     services = list(services)  # tuple to list
-    if action == 'up':
+
+    export_env_vars()
+    # FIXME: be able to override env vars from command line before running docker-compose
+
+    if action == "up":
         services_up(services)
 
     else:
-        services_down(services)
+        services_down()
