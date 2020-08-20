@@ -10,38 +10,25 @@
 import subprocess
 
 
-def services_down():
+def services_down(filepath="docker_services/docker-services.yml"):
     """Stops the given services.
 
     It does not requries the services. It stops containers and removes
     containers, networks, volumes, and images created by `up`.
     """
-
-    command = [
-        "docker-compose",
-        "--file",
-        "../docker-services/docker_services/docker-services.yml",
-        "down",
-    ]
+    command = ["docker-compose", "--file", filepath, "down"]
 
     subprocess.run(command, check=True)
 
 
-def services_up(services):
+def services_up(services, filepath="docker_services/docker-services.yml"):
     """Start the given services up.
 
     docker-compose is smart about not rebuilding an image if
     there is no need to, so --build is not a slow default. In addition
     `--detach` is not supported in 1.17.0 or previous.
     """
-
-    command = [
-        "docker-compose",
-        "--file",
-        "../docker-services/docker_services/docker-services.yml",
-        "up",
-        "-d",
-    ]
+    command = ["docker-compose", "--file", filepath, "up", "-d"]
 
     command.extend(services)
 

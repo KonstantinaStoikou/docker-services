@@ -14,7 +14,10 @@ from setuptools import find_packages, setup
 readme = open('README.rst').read()
 history = open('CHANGES.rst').read()
 
-tests_require = []
+tests_require = [
+    "black>=19.10b0",
+    "pydocstyle>=5.0.0",
+]
 
 extras_require = {
     'docs': [

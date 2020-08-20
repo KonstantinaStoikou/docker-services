@@ -1,3 +1,0 @@
-[console_scripts]
-docker-services = docker_services.cli:cli
-

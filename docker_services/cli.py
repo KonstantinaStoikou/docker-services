@@ -8,10 +8,22 @@
 """CLI module."""
 
 import click
+import site
 
+from pathlib import Path
+
+from .env import export_env_vars
 from .services import services_down, services_up
 
-from env import export_env_vars
+
+def _services_filepath():
+    """Calculates the services file path based on the current site-packages."""
+    sites = site.getsitepackages()
+
+    for _site in sites:
+        path = Path(f"{_site}/docker_services/docker-services.yml")
+        if path.exists() and path.is_file():
+            return str(path)
 
 
 @click.group()
@@ -20,25 +32,24 @@ def cli():
     """Initialize CLI context."""
 
 
-@cli.command()
 @click.argument(
     "action",
     default="up",
     required=False,
     type=click.Choice(["up", "down"], case_sensitive=False),
 )
-@click.argument(
-    "services", nargs=-1, required=True
-)  # -1 incompat with default
-def services(action, services):
+@click.argument("services", nargs=-1, required=False)  # -1 incompat with default
+@click.option(
+    "--filepath", "-f", required=False, help="Path to a custom docker compose file."
+)
+def services(action, services, filepath):
     """Boots up or down the required services."""
     services = list(services)  # tuple to list
-
-    export_env_vars()
     # FIXME: be able to override env vars from command line before running docker-compose
-
+    export_env_vars()
+    filepath = filepath if filepath else _services_filepath()
     if action == "up":
-        services_up(services)
+        services_up(services, filepath)
 
     else:
-        services_down()
+        services_down(filepath)

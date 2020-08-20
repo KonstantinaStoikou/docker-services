@@ -38,4 +38,3 @@ def export_env_vars():
     os.environ["MYSQL_PASSWORD"] = "invenio"
     os.environ["MYSQL_DB"] = "invenio"
     os.environ["MYSQL_ROOT_PASSWORD"] = "invenio"
-
