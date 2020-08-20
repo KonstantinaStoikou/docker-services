@@ -31,7 +31,7 @@ def _services_filepath():
 def cli():
     """Initialize CLI context."""
 
-
+@cli.command()
 @click.argument(
     "action",
     default="up",
