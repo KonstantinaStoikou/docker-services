@@ -13,7 +13,7 @@ import site
 from pathlib import Path
 
 from .env import export_env_vars
-from .services import services_down, services_up
+from .services import services_down, services_up, all_services_up
 
 
 def _services_filepath():
@@ -31,6 +31,7 @@ def _services_filepath():
 def cli():
     """Initialize CLI context."""
 
+
 @cli.command()
 @click.argument(
     "action",
@@ -40,7 +41,7 @@ def cli():
 )
 @click.argument("services", nargs=-1, required=False)  # -1 incompat with default
 @click.option(
-    "--filepath", "-f", required=False, help="Path to a custom docker compose file."
+    "--filepath", "-f", required=False, help="Path to a custom docker compose file.",
 )
 def services(action, services, filepath):
     """Boots up or down the required services."""
@@ -52,3 +53,20 @@ def services(action, services, filepath):
 
     else:
         services_down(filepath)
+
+
+@cli.command()
+@click.argument("services", nargs=-1, required=False)  # -1 incompat with default
+@click.option(
+    "--filepath", "-f", required=False, help="Path to a custom docker compose file.",
+)
+def wait_all_services_up(services, filepath):
+    """Wait until all the containers for all the given services are up."""
+
+    filepath = filepath if filepath else _services_filepath()
+    all_up = all_services_up(services, filepath)
+    while not all_up:
+        all_up = all_services_up(services, filepath)
+
+    click.secho("All services are up.")
+

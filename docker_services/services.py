@@ -33,3 +33,22 @@ def services_up(services, filepath="docker_services/docker-services.yml"):
     command.extend(services)
 
     subprocess.run(command, check=True)
+
+
+def all_services_up(services, filepath="docker_services/docker-services.yml"):
+    command = ["docker-compose", "--file", filepath, "ps", "-q"]
+    command.extend(services)
+
+    out = subprocess.Popen(
+        command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
+    )
+
+    stdout, stderr = out.communicate()
+
+    total_services_up = len(stdout.split())
+
+    if total_services_up == len(services):
+        return True
+
+    return False
+
