@@ -22,9 +22,9 @@ def export_env_vars():
     _setdefault_env("ES_6_LATEST", "6.8.12")
 
     _setdefault_env("ES_7_LATEST", "7.9.0")
-    _setdefault_env("PSQL_9_LATEST", "9.6.19")
-    _setdefault_env("PSQL_10_LATEST", "10.14")
-    _setdefault_env("PSQL_11_LATEST", "11.9")
+    _setdefault_env("POSTGRESQL_9_LATEST", "9.6.19")
+    _setdefault_env("POSTGRESQL_10_LATEST", "10.14")
+    _setdefault_env("POSTGRESQL_11_LATEST", "11.9")
     _setdefault_env("MYSQL_5_LATEST", "5.7.31")
     _setdefault_env("MYSQL_8_LATEST", "8.0.21")
     _setdefault_env("REDIS_6_LATEST", "6.0.6")
@@ -32,7 +32,7 @@ def export_env_vars():
     _setdefault_env("RABBITMQ_3_LATEST", "3.8.7")
 
     # export default services
-    _setdefault_env("DB", "psql")
+    _setdefault_env("DB", "postgresql")
     _setdefault_env("ES", "es")
     _setdefault_env("CACHE", "redis")
 
@@ -40,10 +40,10 @@ def export_env_vars():
     _setdefault_env("ES_VERSION", "7.2.0")
 
     # PostrgreSQL
-    _setdefault_env("PSQL_VERSION", "9.6")
-    _setdefault_env("PSQL_USER", "invenio")
-    _setdefault_env("PSQL_PASSWORD", "invenio")
-    _setdefault_env("PSQL_DB", "invenio")
+    _setdefault_env("POSTGRESQL_VERSION", "9.6")
+    _setdefault_env("POSTGRESQL_USER", "invenio")
+    _setdefault_env("POSTGRESQL_PASSWORD", "invenio")
+    _setdefault_env("POSTGRESQL_DB", "invenio")
 
     # MySQL
     _setdefault_env("MYSQL_USER", "invenio")
