@@ -23,13 +23,13 @@ services:
       - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
     ports:
       - "3306:3306"
-  psql:
-    image: postgres:${PSQL_VERSION}
+  postgresql:
+    image: postgres:${POSTGRESQL_VERSION}
     restart: "always"
     environment:
-      - "POSTGRES_USER=${PSQL_USER}"
-      - "POSTGRES_PASSWORD=${PSQL_PASSWORD}"
-      - "POSTGRES_DB=${PSQL_DB}"
+      - "POSTGRES_USER=${POSTGRESQL_USER}"
+      - "POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}"
+      - "POSTGRES_DB=${POSTGRESQL_DB}"
     ports:
       - "5432:5432"
   es:
